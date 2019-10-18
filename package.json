@@ -1,0 +1,24 @@
+{
+  "name": "TestArena",
+  "version": "1.0.0",
+  "description": "Project contain automated test scenarios using cucumber-js and WebDriver",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krzysztofmichalak/TestsArena.git"
+  },
+  "author": "Krzysztof Michalak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krzysztofmichalak/TestsArena/issues"
+  },
+  "homepage": "https://github.com/krzysztofmichalak/TestsArena#readme",
+  "dependencies": {
+    "chromedriver": "^77.0.0",
+    "cucumber": "^5.1.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  }
+}
