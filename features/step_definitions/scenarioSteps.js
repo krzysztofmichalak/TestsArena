@@ -15,7 +15,7 @@ When(
     'save {string} item price',
     async function (priceTitle) {
         const priceData = await searchResultPage().getPriceFromItem(0);
-        priceStorage[cheapest] = getGrosze(priceData);
+        priceStorage[priceTitle] = getGrosze(priceData);
     }
 );
 
@@ -34,7 +34,7 @@ When(
                 sum += getGrosze(priceData);
             }
             sum  /= 100;
-            console.info('Sum prices of ' + itemCount.toString() + ' items [PLN]: ', sum);
+            console.info('\n# Sum prices of ' + itemCount.toString() + ' items [PLN]: ', sum);
         }
     });
 
@@ -46,7 +46,7 @@ When(
             const priceData = await searchResultPage().getPriceFromItem(0);
             priceStorage[mostExpensive] = getGrosze(priceData);
             console.info(
-                'Prices and difference [PLN]: ',
+                '\n# Prices and difference [PLN]: ',
                 {
                     Cheapest: priceStorage[cheapest] / 100,
                     MostExpensive: priceStorage[mostExpensive] / 100,
@@ -66,10 +66,15 @@ Then(
         const grosze = getGrosze(priceData);
         const itemsCount = getCountValue(countData);
         console.info(
-            'Data to compare: ',
+            '\n# Data to compare: ',
             {'Item price in grosze': grosze, 'Items count': itemsCount }
         );
-        assert(grosze > itemsCount,"Price of first item is not grater than searched items count");
+        assert(
+            grosze > itemsCount,
+            'Price of first item is not grater than searched items count. ' +
+            'Price in grosze: ' + grosze.toString() +
+            ', Items count: ' + itemsCount.toString()
+        );
     });
 
 Then(
@@ -78,6 +83,33 @@ Then(
         assert(
             priceStorage[cheapest] < getGrosze(lessThan) || priceStorage[cheapest] > getGrosze(greaterThan),
             'Price is between ' + lessThan + ' and ' + greaterThan
+        );
+    }
+);
+
+Then(
+    'a user should see {int} items count',
+    async function (expectedItemsCount) {
+        const countData = await searchResultPage().getItemsCountData();
+        const currentItemsCount = getCountValue(countData);
+        assert(
+            expectedItemsCount === currentItemsCount,
+            'Items count is not as expected. ' +
+            'Expected: ' + expectedItemsCount.toString() +
+            ', Current: ' + currentItemsCount.toString()
+        );
+    }
+);
+
+Then(
+    'the user should see {int} items on first page',
+    async function (expectedDisplayedItems) {
+        const currentDisplayedItems = await searchResultPage().getDisplayedItemsCount();
+        assert(
+            expectedDisplayedItems === currentDisplayedItems,
+            'Items count is not as expected. ' +
+            'Expected: ' + expectedDisplayedItems.toString() +
+            ', Current: ' + currentDisplayedItems.toString()
         );
     }
 );

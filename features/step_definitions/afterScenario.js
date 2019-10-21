@@ -5,7 +5,7 @@ const driver = require('../../utils/webDriver');
  * Tear-down
  */
 AfterAll(async () => {
-  if (driver != null) {
-    driver.quit();
+  if (driver !== null) {
+    await driver.quit();
   }
 });

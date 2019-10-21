@@ -8,6 +8,9 @@ npm install
 # Run all tests
 in TestArena directory run:
 
-node node_modules\cucumber\bin\cucumber-js
+- node node_modules\cucumber\bin\cucumber-js
+
+or
+- ./node_modules/.bin/cucumber-js
 # Contact
 krzysztof-michalak@outlook.com

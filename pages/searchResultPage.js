@@ -34,11 +34,14 @@ const searchResultPage = () => {
   }
 
   async function waitForLoadingItems() {
-    try {
-      await driver.wait(until.stalenessOf(driver.findElement(elements.itemsLoader)), 10000);
-    } catch (e) {
-      console.warn('During loading items something went wrong');
-    }
+      await driver.findElement(elements.itemsLoader).then(
+          async function (loader) {
+            await driver.wait(until.stalenessOf(loader), 10000);
+          },
+          function (err) {
+            console.warn('During loading items something went wrong');
+          }
+      );
   }
 
   return {
@@ -51,12 +54,23 @@ const searchResultPage = () => {
     async getPriceFromItem(itemNumber) {
       await driver.wait(until.elementsLocated(elements.searchedItems));
       const displayedItems = await driver.findElements(elements.searchedItems);
+
       return await displayedItems[itemNumber].findElement(elements.price).getText();
     },
 
     async sortItemsBy(newSortingRule) {
+      const currentSortingRule = await driver.findElement(elements.sortingRule).getText();
+      if (newSortingRule === currentSortingRule) {
+        return;
+      }
       await rollDownSortingRules();
       await selectSortingRule(newSortingRule);
+    },
+
+    async getDisplayedItemsCount() {
+      const displayedItems = await driver.findElements(elements.searchedItems);
+
+      return displayedItems.length;
     }
   }
 };

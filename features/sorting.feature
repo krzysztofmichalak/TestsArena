@@ -8,20 +8,20 @@ Feature: As a user I want to sort searched item via price
       And display difference between cheapest and most expensive if price of first item is greater than "721 zł"
     Then price of first item should be less than "500 zł" or greater than "721 zł"
 
-#   # Not automated scenario with fake data
-#  Scenario Outline: User should see the same count number of items for each sorting
-#    When a user search item called "rower" on the auction platform
-#      And a user sorts searched items by "<sortingRule>"
-#    Then a user should see 1668 item count
-#    Examples:
-#    | sortingRule             |
-#    | Trafność                |
-#    | Popularność             |
-#    | Cena rosnąco            |
-#    | Cena malejąco           |
-#    | Cena z dostawą malejąco |
-#    | Cena z dostawą rosnąco  |
-#
+  Scenario Outline: User should see the same count number of items for each sorting rule
+    When a user search item called "komin" on the auction platform
+      And a user sorts searched items by "<sortingRule>"
+    Then a user should see 164 items count
+
+    Examples:
+    | sortingRule             |
+    | Trafność                |
+    | Popularność             |
+    | Cena rosnąco            |
+    | Cena malejąco           |
+    | Cena z dostawą malejąco |
+    | Cena z dostawą rosnąco  |
+
 #  # Not automated scenario with fake data
 #  Scenario Outline: User should proper items according to sorting rule
 #    When a user search item called "rower" on the auction platform
